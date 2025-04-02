@@ -14,11 +14,11 @@ const Index = () => {
   const { toast } = useToast();
 
   const serviceStatusData = [
-    { name: "Compute Engine", status: "operational", region: "us-east1", updated: "2m ago" },
-    { name: "Object Storage", status: "degraded", region: "eu-west1", updated: "10m ago" },
-    { name: "Kubernetes Service", status: "operational", region: "us-west1", updated: "5m ago" },
-    { name: "Database Service", status: "maintenance", region: "ap-south1", updated: "1h ago" },
-    { name: "Load Balancer", status: "operational", region: "global", updated: "15m ago" },
+    { name: "Compute Engine", status: "operational" as const, region: "us-east1", updated: "2m ago" },
+    { name: "Object Storage", status: "degraded" as const, region: "eu-west1", updated: "10m ago" },
+    { name: "Kubernetes Service", status: "operational" as const, region: "us-west1", updated: "5m ago" },
+    { name: "Database Service", status: "maintenance" as const, region: "ap-south1", updated: "1h ago" },
+    { name: "Load Balancer", status: "operational" as const, region: "global", updated: "15m ago" },
   ];
 
   const vmResources = [
@@ -26,7 +26,7 @@ const Index = () => {
       id: "vm-1", 
       name: "web-server-01", 
       type: "Standard VM", 
-      status: "running", 
+      status: "running" as const, 
       region: "us-east1", 
       created: "2023-05-10",
       usage: { cpu: 65, memory: 78, storage: 45 }
@@ -35,7 +35,7 @@ const Index = () => {
       id: "vm-2", 
       name: "db-server-01", 
       type: "Memory Optimized", 
-      status: "running", 
+      status: "running" as const, 
       region: "us-east1", 
       created: "2023-06-15",
       usage: { cpu: 82, memory: 90, storage: 60 }
@@ -44,7 +44,7 @@ const Index = () => {
       id: "vm-3", 
       name: "api-server-01", 
       type: "Standard VM", 
-      status: "stopped", 
+      status: "stopped" as const, 
       region: "eu-west1", 
       created: "2023-04-22",
       usage: { cpu: 0, memory: 0, storage: 35 }
@@ -53,7 +53,7 @@ const Index = () => {
       id: "vm-4", 
       name: "analytics-01", 
       type: "Compute Optimized", 
-      status: "provisioning", 
+      status: "provisioning" as const, 
       region: "us-west1", 
       created: "2023-09-01",
       usage: { cpu: 15, memory: 25, storage: 10 }
@@ -65,7 +65,7 @@ const Index = () => {
       id: "st-1", 
       name: "app-data", 
       type: "Object Storage", 
-      status: "running", 
+      status: "running" as const, 
       region: "us-east1", 
       created: "2023-03-15" 
     },
@@ -73,7 +73,7 @@ const Index = () => {
       id: "st-2", 
       name: "user-uploads", 
       type: "Object Storage", 
-      status: "running", 
+      status: "running" as const, 
       region: "global", 
       created: "2023-05-08" 
     },
@@ -81,7 +81,7 @@ const Index = () => {
       id: "st-3", 
       name: "database-backups", 
       type: "Block Storage", 
-      status: "running", 
+      status: "running" as const, 
       region: "eu-west1", 
       created: "2023-02-20" 
     },

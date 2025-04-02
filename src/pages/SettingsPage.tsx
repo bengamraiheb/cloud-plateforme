@@ -1,4 +1,3 @@
-
 import React from "react";
 import { DashboardLayout } from "@/components/layout/Dashboard";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { BellRing, CreditCard, Globe, Mail, Save, Shield, User } from "lucide-react";
+import { BellRing, CreditCard, Globe, Mail, Plus, Save, Shield, User } from "lucide-react";
 
 const SettingsPage: React.FC = () => {
   return (
