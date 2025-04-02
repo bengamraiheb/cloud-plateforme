@@ -42,9 +42,7 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+![Capture d'écran 2025-04-02 092842](https://github.com/user-attachments/assets/252d37b8-b15a-41ce-b462-d4aa19669344)
 
 Yes it is!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
