@@ -9,6 +9,7 @@ import {
   Users,
   Wifi,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import {
   Sidebar,
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 // Menu items for the sidebar
 const mainMenuItems = [
@@ -69,6 +71,8 @@ const managementItems = [
 ];
 
 export function AppSidebar() {
+  const location = useLocation();
+  
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-6">
@@ -89,13 +93,13 @@ export function AppSidebar() {
               {mainMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} className={cn(
-                      window.location.pathname === item.url ? 
+                    <Link to={item.url} className={cn(
+                      location.pathname === item.url ? 
                       "bg-sidebar-accent text-sidebar-accent-foreground" : ""
                     )}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -110,13 +114,13 @@ export function AppSidebar() {
               {managementItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} className={cn(
-                      window.location.pathname === item.url ? 
+                    <Link to={item.url} className={cn(
+                      location.pathname === item.url ? 
                       "bg-sidebar-accent text-sidebar-accent-foreground" : ""
                     )}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
