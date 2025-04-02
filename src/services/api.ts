@@ -86,6 +86,8 @@ async function mockApiResponse<T>(endpoint: string, options: RequestInit): Promi
     return import("./mocks/settingsMocks").then(m => m.handleSettingsMock<T>(endpoint, method, body));
   } else if (endpoint.startsWith("/dashboard")) {
     return import("./mocks/dashboardMocks").then(m => m.handleDashboardMock<T>(endpoint, method, body));
+  } else if (endpoint.startsWith("/auth")) {
+    return import("./mocks/authMocks").then(m => m.handleAuthMock<T>(endpoint, method, body));
   }
   
   throw new Error(`Unhandled mock endpoint: ${endpoint}`);
