@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-type Service = {
+export type Service = {
   name: string;
   status: "operational" | "degraded" | "outage" | "maintenance";
   region: string;

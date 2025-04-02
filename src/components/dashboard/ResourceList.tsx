@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
-type Resource = {
+export type Resource = {
   id: string;
   name: string;
   type: string;
