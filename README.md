@@ -42,7 +42,16 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
-![Capture d'écran 2025-04-02 092842](https://github.com/user-attachments/assets/252d37b8-b15a-41ce-b462-d4aa19669344)
+![Capture d'écran 2025-04-02 092904](https://github.com/user-attachments/assets/a91314fb-5ee5-4ed4-bbab-3c11fbf50406)
+![Capture d'écran 2025-04-02 092918](https://github.com/user-attachments/assets/b1287d4f-0c01-4f57-82e9-e915c8fe7ebf)
+![Capture d'écran 2025-04-02 092934](https://github.com/user-attachments/assets/a98dd32b-5e40-48d2-92c4-9b9b9d5d8bbc)
+![Capture d'écran 2025-04-02 092629](https://github.com/user-attachments/assets/964f1f6d-ecad-45cf-a4dc-775c1f088685)
+![Capture d'écran 2025-04-02 092654](https://github.com/user-attachments/assets/fe7ce43a-ad5e-43cb-80a1-d9ccaabf521e)
+![Capture d'écran 2025-04-02 092714](https://github.com/user-attachments/assets/c1586d7a-b342-4e2b-a494-929586ef3744)
+![Capture d'écran 2025-04-02 092734](https://github.com/user-attachments/assets/87a3cc15-7b00-42f4-a392-2ca024bc0bb0)
+![Capture d'écran 2025-04-02 092751](https://github.com/user-attachments/assets/99202ac6-35be-47d0-9ac0-4c437d22854c)
+![Capture d'écran 2025-04-02 092824](https://github.com/user-attachments/assets/789ac8b6-74c0-4a4f-9191-b6394780ae3b)
+![Capture d'écran 2025-04-02 092842](https://github.com/user-attachments/assets/f9b5d0d8-e09d-4c76-9876-a79c8b1eafee)
 
 Yes it is!
 
