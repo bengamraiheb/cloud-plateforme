@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import React from "react";
 import { TopNav } from "@/components/layout/TopNav";
+import { ChatbotAssistant } from "@/components/chatbot/ChatbotAssistant";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +16,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             {children}
           </main>
         </div>
+        <ChatbotAssistant />
       </div>
     </SidebarProvider>
   );
