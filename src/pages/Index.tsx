@@ -8,111 +8,51 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { Button } from "@/components/ui/button";
 import { Cloud, Database, Plus, Server, Wifi } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getDashboardSummary } from "@/services/dashboardService";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { toast } = useToast();
+  const [hasToasted, setHasToasted] = useState(false);
 
-  const serviceStatusData = [
-    { name: "Compute Engine", status: "operational" as const, region: "us-east1", updated: "2m ago" },
-    { name: "Object Storage", status: "degraded" as const, region: "eu-west1", updated: "10m ago" },
-    { name: "Kubernetes Service", status: "operational" as const, region: "us-west1", updated: "5m ago" },
-    { name: "Database Service", status: "maintenance" as const, region: "ap-south1", updated: "1h ago" },
-    { name: "Load Balancer", status: "operational" as const, region: "global", updated: "15m ago" },
-  ];
-
-  const vmResources = [
-    { 
-      id: "vm-1", 
-      name: "web-server-01", 
-      type: "Standard VM", 
-      status: "running" as const, 
-      region: "us-east1", 
-      created: "2023-05-10",
-      usage: { cpu: 65, memory: 78, storage: 45 }
-    },
-    { 
-      id: "vm-2", 
-      name: "db-server-01", 
-      type: "Memory Optimized", 
-      status: "running" as const, 
-      region: "us-east1", 
-      created: "2023-06-15",
-      usage: { cpu: 82, memory: 90, storage: 60 }
-    },
-    { 
-      id: "vm-3", 
-      name: "api-server-01", 
-      type: "Standard VM", 
-      status: "stopped" as const, 
-      region: "eu-west1", 
-      created: "2023-04-22",
-      usage: { cpu: 0, memory: 0, storage: 35 }
-    },
-    { 
-      id: "vm-4", 
-      name: "analytics-01", 
-      type: "Compute Optimized", 
-      status: "provisioning" as const, 
-      region: "us-west1", 
-      created: "2023-09-01",
-      usage: { cpu: 15, memory: 25, storage: 10 }
-    },
-  ];
-
-  const storageResources = [
-    { 
-      id: "st-1", 
-      name: "app-data", 
-      type: "Object Storage", 
-      status: "running" as const, 
-      region: "us-east1", 
-      created: "2023-03-15" 
-    },
-    { 
-      id: "st-2", 
-      name: "user-uploads", 
-      type: "Object Storage", 
-      status: "running" as const, 
-      region: "global", 
-      created: "2023-05-08" 
-    },
-    { 
-      id: "st-3", 
-      name: "database-backups", 
-      type: "Block Storage", 
-      status: "running" as const, 
-      region: "eu-west1", 
-      created: "2023-02-20" 
-    },
-  ];
-
-  const cpuUsageData = [
-    { name: "00:00", value: 30 },
-    { name: "04:00", value: 25 },
-    { name: "08:00", value: 45 },
-    { name: "12:00", value: 75 },
-    { name: "16:00", value: 90 },
-    { name: "20:00", value: 60 },
-    { name: "24:00", value: 40 },
-  ];
-
-  const networkUsageData = [
-    { name: "00:00", value: 5 },
-    { name: "04:00", value: 3 },
-    { name: "08:00", value: 12 },
-    { name: "12:00", value: 25 },
-    { name: "16:00", value: 30 },
-    { name: "20:00", value: 18 },
-    { name: "24:00", value: 8 },
-  ];
+  // Fetch dashboard data
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['dashboardSummary'],
+    queryFn: getDashboardSummary,
+  });
 
   useEffect(() => {
-    toast({
-      title: "Welcome to CloudHaven",
-      description: "Your cloud resources are being monitored.",
-    });
-  }, [toast]);
+    if (!hasToasted) {
+      toast({
+        title: "Welcome to CloudHaven",
+        description: "Your cloud resources are being monitored.",
+      });
+      setHasToasted(true);
+    }
+
+    if (error) {
+      toast({
+        title: "Error loading dashboard",
+        description: "Failed to load dashboard data. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  }, [toast, error, hasToasted]);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center h-[600px]">
+          <div className="text-center">
+            <div className="mb-4 text-2xl font-bold">Loading dashboard...</div>
+            <div className="text-muted-foreground">Please wait while we fetch your cloud resources</div>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
@@ -121,63 +61,65 @@ const Index = () => {
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-muted-foreground">Welcome to CloudHaven - Your cloud management platform</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Create Resource
+        <Button className="gap-2" asChild>
+          <Link to="/compute">
+            <Plus className="h-4 w-4" />
+            Create Resource
+          </Link>
         </Button>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatsCard 
           title="Total VMs" 
-          value={42}
+          value={data?.stats.totalVms || 0}
           description="Active virtual machines"
           icon={<Server />}
-          trend={{ value: 12, isPositive: true }}
+          trend={data?.stats.trends.totalVms}
         />
         <StatsCard 
           title="Storage Used" 
-          value="1.2 TB"
+          value={data?.stats.storageUsed || "0 TB"}
           description="Across all storage services"
           icon={<Database />}
-          trend={{ value: 8, isPositive: true }}
+          trend={data?.stats.trends.storageUsed}
         />
         <StatsCard 
           title="Network Bandwidth" 
-          value="45 GB/hr"
+          value={data?.stats.networkBandwidth || "0 GB/hr"}
           description="Current throughput"
           icon={<Wifi />}
-          trend={{ value: 5, isPositive: false }}
+          trend={data?.stats.trends.networkBandwidth}
         />
         <StatsCard 
           title="Active Services" 
-          value={15}
+          value={data?.stats.activeServices || 0}
           description="Running cloud services"
           icon={<Cloud />}
-          trend={{ value: 3, isPositive: true }}
+          trend={data?.stats.trends.activeServices}
         />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <ResourceUsage 
           title="Compute Usage" 
-          used={65} 
-          total={100} 
-          unit="vCPUs" 
+          used={data?.resourceUsage.compute.used || 0} 
+          total={data?.resourceUsage.compute.total || 1} 
+          unit={data?.resourceUsage.compute.unit || "vCPUs"} 
           icon={<Server className="h-4 w-4 text-muted-foreground" />} 
         />
         <ResourceUsage 
           title="Storage Usage" 
-          used={1.8} 
-          total={2} 
-          unit="TB" 
+          used={data?.resourceUsage.storage.used || 0} 
+          total={data?.resourceUsage.storage.total || 1} 
+          unit={data?.resourceUsage.storage.unit || "TB"} 
           icon={<Database className="h-4 w-4 text-muted-foreground" />} 
         />
         <ResourceUsage 
           title="Network Bandwidth" 
-          used={45} 
-          total={100} 
-          unit="GB/hr" 
+          used={data?.resourceUsage.network.used || 0} 
+          total={data?.resourceUsage.network.total || 1} 
+          unit={data?.resourceUsage.network.unit || "GB/hr"} 
           icon={<Wifi className="h-4 w-4 text-muted-foreground" />} 
         />
       </div>
@@ -185,14 +127,14 @@ const Index = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <UsageChart 
           title="CPU Utilization (24h)" 
-          data={cpuUsageData} 
+          data={data?.cpuUsage || []} 
           dataKey="value" 
           yAxisLabel="CPU %" 
           color="#0078D4" 
         />
         <UsageChart 
           title="Network Throughput (24h)" 
-          data={networkUsageData} 
+          data={data?.networkUsage || []} 
           dataKey="value" 
           yAxisLabel="GB/hr" 
           color="#00B7C3" 
@@ -202,12 +144,12 @@ const Index = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <ServiceStatus services={serviceStatusData} />
-        <ResourceList title="Virtual Machines" resources={vmResources} />
+        <ServiceStatus services={data?.serviceStatus || []} />
+        <ResourceList title="Virtual Machines" resources={data?.vmResources || []} />
       </div>
       
       <div className="mb-6">
-        <ResourceList title="Storage Resources" resources={storageResources} />
+        <ResourceList title="Storage Resources" resources={data?.storageResources || []} />
       </div>
     </DashboardLayout>
   );
